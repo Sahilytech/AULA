@@ -1,61 +1,103 @@
-# ✦ LUMI — AI Study Intelligence Hub
+# ✦ LUMI — AI Academic OS
 
-> **Plataforma de estudio moderna, multidioma, offline-first y orientada al estudiante.**
+> **Una plataforma de estudio internacional que convierte planificación, aprendizaje, práctica y progreso en una sola experiencia.**
 >
 > Creada por **Sarah Lee Olivera** · **NubiWorks** · 2026
 
-LUMI nace para resolver un problema cotidiano del sector estudiantil: tareas, apuntes, fechas, sesiones de estudio y herramientas educativas repartidas entre demasiadas aplicaciones.
+LUMI está diseñada como un **Academic OS**: tareas, materias, calendario, notas, flashcards, Focus, estadísticas y un asistente inteligente conectado a la experiencia académica.
 
-La propuesta es convertir todo eso en un **Study OS**: planificar → estudiar → practicar → descansar → revisar el progreso, desde una sola experiencia.
+## ✦ Arquitectura
 
-## ✦ Funcionalidades
+```text
+LUMI Frontend / PWA
+        │
+        ├── Academic OS
+        ├── Calendar + Planner
+        ├── Notes + Flashcards
+        ├── Focus + Exam Mode
+        ├── i18n
+        └── Widgets
+        │
+        ├── Local engine + IndexedDB
+        │
+        └── LUMI Cloud (optional online mode)
+                 ├── Supabase Auth / Sync
+                 └── Secure AI Gateway → OpenRouter
+```
 
-### Dashboard
-- Centro de comando académico.
+La clave de OpenRouter **nunca** debe estar en el frontend. El backend mantiene el secreto y aplica límites de tamaño y frecuencia.
+
+## 🧠 LUMI Assistant
+
+LUMI tiene dos capas:
+
+- **LUMI Core:** motor local determinista para detectar intenciones de tareas, calendario, notas, Focus y repaso.
+- **LUMI Online:** cuando se configura el backend, el Assistant puede usar un modelo generativo mediante OpenRouter.
+
+Puede ayudar a:
+- Explicar conceptos.
+- Resumir apuntes.
+- Generar preguntas y flashcards.
+- Crear planes de estudio.
+- Dividir tareas grandes.
+- Preparar simulacros.
+- Organizar una semana académica.
+
+La IA está pensada para **potenciar el aprendizaje, no reemplazar el trabajo del estudiante**.
+
+## 📚 Academic OS
+
+- Materias y objetivos.
 - Tareas y prioridades.
-- Progreso semanal.
-- Racha de estudio.
-- Estadísticas rápidas.
-- Accesos directos a los módulos.
-
-### Study Lab
-- Active Recall.
+- Notas locales.
 - Flashcards.
-- Planes de estudio.
-- Práctica guiada.
-- Herramientas para transformar apuntes en actividades.
+- Repetición espaciada.
+- Active Recall.
+- Planificador semanal.
+- Sesiones de Focus.
+- Modo examen.
+- Estadísticas.
+- Widgets.
+- Exportación/importación de backups JSON.
+- IndexedDB para datos académicos avanzados.
 
-### Calendario
-- Vista mensual.
-- Eventos académicos.
-- Entregas y exámenes.
-- Agenda.
-- Eventos guardados localmente.
-- Navegación entre meses.
+## ☁️ Cuentas y sincronización
 
-### Focus
-- Temporizador de concentración.
-- Pausar / continuar.
-- Sesiones sin distracciones.
-- Progreso local.
+El backend preparado para LUMI Cloud utiliza **Supabase** para autenticación y sincronización.
 
-### Student Support
-- Check-in académico.
-- Pausas inteligentes.
-- División de tareas grandes en pasos pequeños.
-- Mensajes de apoyo para organizar el estudio.
+La base de datos propuesta incluye:
 
-### Personalización
-- Tema oscuro.
-- Tema claro.
-- Hologramas y orbes animados.
-- Glassmorphism.
-- Responsive.
-- Respeto por `prefers-reduced-motion`.
+- `profiles` — idioma, tema y perfil.
+- `academic_items` — materias, tareas, notas, flashcards, eventos, planes, sesiones y widgets mediante `jsonb`.
+- Row Level Security para que cada usuario pueda acceder únicamente a sus propios datos.
+
+El frontend solo utiliza la **anon key pública** de Supabase. El `service_role` permanece exclusivamente en el backend.
+
+## 🤖 OpenRouter seguro
+
+El backend incluye `/api/ai/chat` como gateway. El navegador nunca recibe `OPENROUTER_API_KEY`.
+
+Variables privadas del backend:
+
+```env
+OPENROUTER_API_KEY=...
+OPENROUTER_MODEL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+```
+
+Variables públicas/configurables del frontend:
+
+```js
+window.LUMI_CONFIG = {
+  API_BASE: 'https://tu-backend.example.com',
+  SUPABASE_URL: 'https://tu-proyecto.supabase.co',
+  SUPABASE_ANON_KEY: 'tu-anon-key'
+};
+```
+
+**Nunca** publiques una API key de OpenRouter o una Supabase service-role key.
 
 ## 🌎 Idiomas
-
-LUMI incluye internacionalización para:
 
 - 🇪🇸 Español
 - 🇬🇧 English
@@ -64,159 +106,147 @@ LUMI incluye internacionalización para:
 - 🇯🇵 日本語
 - 🇨🇳 中文
 
-El idioma se detecta inicialmente según el navegador y luego queda guardado en el dispositivo. Se puede cambiar desde `🌐`.
+LUMI detecta el idioma del navegador, permite cambiarlo manualmente y guarda la preferencia.
 
-## 📱 PWA + Offline-first
+## ✨ Interfaz
 
-LUMI incluye:
+- HUD holográfico.
+- Glassmorphism.
+- Orbes y anillos animados.
+- Gradientes dinámicos.
+- Microinteracciones.
+- Modales propios de LUMI.
+- Sin `alert()`/`prompt()` para acciones de la aplicación.
+- Dark / Light.
+- Responsive.
+- `prefers-reduced-motion`.
+- PWA instalable.
 
-- `manifest.json` para instalación como aplicación.
-- `sw.js` para caché offline.
-- Icono propio.
-- Datos de tareas y preferencias almacenados localmente.
-- Sin backend obligatorio.
-- Sin base de datos externa obligatoria.
+## 📦 Qué instalar
 
-La primera carga necesita conexión para obtener los recursos; después, los recursos cacheados pueden utilizarse offline.
+### Para usar la versión publicada
+Nada.
 
-## 🧰 ¿Qué hay que instalar?
-
-### Para usar LUMI
-**Nada obligatorio.**
-
-Podés abrir `index.html` en un navegador moderno o utilizar GitHub Pages.
-
-### Para desarrollar
+### Para desarrollar el frontend
 - Git.
-- Un navegador moderno.
-- Un editor como VS Code, Cursor o Zed.
+- Navegador moderno.
+- VS Code, Cursor, Zed u otro editor.
 
-No necesitás Node.js, npm, Python, React, Vite ni frameworks externos para el núcleo.
-
-Para probar PWA/service worker localmente con Python:
+### Para desarrollar LUMI Cloud
+- Node.js 20+.
+- npm.
+- Un proyecto Supabase.
+- Una API key de OpenRouter si querés habilitar IA generativa.
 
 ```bash
-python -m http.server 8080
+cd backend
+npm install
+copy .env.example .env
+npm start
 ```
 
-Después abrí `http://localhost:8080`.
+No guardes `.env` en Git.
+
+## 🗃️ Supabase
+
+Ejecutá `supabase/schema.sql` en el SQL Editor de tu proyecto Supabase.
+
+Después configurá las variables del backend y la configuración pública del frontend.
 
 ## ▶️ GitHub Pages
 
-El proyecto incluye GitHub Actions en `.github/workflows/pages.yml`.
+`.github/workflows/pages.yml` publica automáticamente el frontend cuando se hace push a `main`.
 
-Cada `push` a `main` puede publicar automáticamente el sitio mediante GitHub Pages.
+GitHub Pages aloja el frontend estático. **No ejecuta el backend Node**; LUMI Cloud debe desplegarse en un servicio que soporte Node/serverless y después configurarse mediante `API_BASE`.
 
-URL esperada:
+## 🧪 CI
 
-`https://sahilytech.github.io/LUMI/`
+El repositorio incluye validaciones para detectar errores de JavaScript y comprobar el backend antes del despliegue.
 
 ## 🗂️ Estructura
 
 ```text
 LUMI/
 ├── index.html
-├── features.html
-├── study.html
+├── academic.html
+├── academic.js
+├── academic-os.js
 ├── calendar.html
+├── study.html
 ├── support.html
-├── style.css
+├── auth.html
 ├── app.js
+├── lumi-core.js
+├── cloud.js
+├── config.js
+├── config.example.js
 ├── i18n.js
+├── onboarding.js
+├── style.css
+├── academic.css
 ├── manifest.json
 ├── sw.js
 ├── assets/
-│   └── lumi-icon.svg
+├── backend/
+│   ├── server.js
+│   ├── package.json
+│   ├── .env.example
+│   └── README.md
+├── supabase/
+│   └── schema.sql
 ├── .github/
 │   └── workflows/
-│       └── pages.yml
 ├── LICENSE
 └── README.md
 ```
 
-## 🎨 Interfaz
+## 🔐 Seguridad
 
-LUMI utiliza una identidad inspirada en HUD, hologramas, cyber-tech y glassmorphism, con:
-
-- Orbes de luz.
-- Anillos holográficos.
-- Gradientes animados.
-- Microinteracciones.
-- Modales propios de LUMI en lugar de `alert()`/`prompt()` del navegador.
-- Diseño responsive.
-- Tema claro/oscuro persistente.
-- Animaciones reducidas automáticamente cuando el sistema lo solicita.
-
-## 🔐 Privacidad
-
-LUMI está planteada como una experiencia local-first. Las tareas, preferencias y algunos datos de estudio se guardan en el almacenamiento del navegador.
-
-No hay una cuenta obligatoria ni un servidor propio necesario para el núcleo de la aplicación.
-
-## 🤖 IA
-
-El núcleo de LUMI no requiere una API externa para funcionar. Las herramientas de estudio pueden evolucionar hacia integraciones inteligentes, pero la experiencia base sigue siendo utilizable sin claves privadas ni suscripciones.
-
-La filosofía del proyecto es:
-
-> **La IA ayuda a aprender; no reemplaza el aprendizaje.**
-
-## ♿ Accesibilidad y rendimiento
-
-- Responsive.
-- Controles de teclado del navegador.
-- `prefers-reduced-motion`.
-- Sin dependencias obligatorias.
-- Carga liviana.
-- Contraste para temas claro y oscuro.
-
-## 👩‍💻 Autora
-
-**Sarah Lee Olivera**
-
-LUMI es un proyecto personal desarrollado bajo **NubiWorks**, mini compañía/estudio indie de Sarah.
-
-El proyecto explora producto digital, educación, IA, UX/UI y desarrollo web.
+- `.env` está ignorado por Git.
+- Las claves privadas solo viven en el backend.
+- OpenRouter se accede mediante gateway.
+- Rate limiting para el endpoint de IA.
+- Historial de mensajes limitado antes de enviarlo al proveedor.
+- Supabase RLS para datos académicos.
+- No se incluyen secretos en el repositorio.
 
 ## 🚀 Roadmap
 
-### Base
 - [x] Dashboard
 - [x] Tareas
 - [x] Focus
 - [x] Calendario
 - [x] Study Lab
 - [x] Student Support
-- [x] Tema claro/oscuro
-- [x] Interfaz holográfica
-
-### Global
-- [x] Español
-- [x] English
-- [x] Русский
-- [x] Português
-- [x] 日本語
-- [x] 中文
-- [x] Detección automática de idioma
+- [x] Dark / Light
+- [x] UI holográfica
+- [x] Seis idiomas
 - [x] PWA
-- [x] Service Worker
-- [x] GitHub Pages
+- [x] IndexedDB
+- [x] Materias
+- [x] Notas
+- [x] Flashcards + repetición espaciada
+- [x] Planificador semanal
+- [x] Estadísticas base
+- [x] Backup JSON
+- [x] Modo examen
+- [x] Backend seguro OpenRouter
+- [x] Base de autenticación/sincronización Supabase
+- [x] GitHub Actions para Pages
+- [ ] Desplegar LUMI Cloud en producción
+- [ ] Conectar sincronización completa de todos los módulos
+- [ ] Widgets drag & drop
+- [ ] Analítica académica avanzada
 
-### Próximas versiones
-- [ ] IndexedDB para datos académicos avanzados.
-- [ ] Sistema completo de materias.
-- [ ] Editor de notas enriquecido.
-- [ ] Flashcards con repetición espaciada.
-- [ ] Planificador semanal inteligente.
-- [ ] Estadísticas avanzadas.
-- [ ] Importar/exportar backups.
-- [ ] Onboarding personalizado.
-- [ ] Modo examen.
-- [ ] Widgets personalizables.
+## 👩‍💻 Autora
+
+**Sarah Lee Olivera**
+
+LUMI es un proyecto personal creado bajo **NubiWorks**, mini compañía/estudio indie de Sarah.
 
 ## 📄 Licencia
 
-Distribuido bajo la licencia **MIT**. Consultá `LICENSE` para los términos completos.
+LUMI se distribuye bajo **MIT**. Consultá `LICENSE` para los términos completos.
 
 ---
 
