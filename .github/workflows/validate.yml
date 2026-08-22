@@ -14,7 +14,7 @@ jobs:
           node-version: 20
       - name: Syntax check frontend modules
         run: |
-          for f in app.js academic.js academic-os.js cloud.js i18n.js lumi-core.js onboarding.js; do node --check "$f"; done
+          for f in app.js academic.js academic-os.js cloud.js cloud-sync.js i18n.js lumi-core.js onboarding.js widgets.js; do node --check "$f"; done
   backend:
     runs-on: ubuntu-latest
     defaults:
