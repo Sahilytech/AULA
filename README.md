@@ -1,134 +1,107 @@
-# ✦ LUMI — Learning Garden
+# LUMI — Learning Garden
 
-> **Una web de aprendizaje interactiva, tranquila y divertida.**
+> **Un espacio de estudio interactivo para aprender, practicar, leer y jugar.**
 >
-> Creada por **Sarah Lee Olivera** · **NubiWorks** · 2026
+> Sarah Lee Olivera · NubiWorks · 2026
 
-LUMI dejó de ser un simple administrador de tareas. La idea ahora es que el estudiante pueda **aprender, practicar y jugar** en el mismo espacio.
+LUMI es una web educativa local-first. Reúne material de estudio, juegos, lectura y comprensión de documentos, biblioteca de audio, notas, materias, agenda y Focus en una sola interfaz.
 
-## 🌸 Qué puede hacer LUMI
+## ✦ Qué incluye
 
 ### Aprendizaje
-- PDF → trivia de preguntas y respuestas.
-- Generación local de preguntas a partir del texto extraído del PDF.
-- Quiz rápido con apuntes guardados.
-- Juego de memoria con flashcards.
-- Repetición espaciada.
-- Active Recall.
-- Misión Focus.
+- **PDF → Trivia:** extracción local de texto y creación determinista de preguntas.
+- **Quiz rápido:** preguntas de opción múltiple, progreso, feedback y puntaje.
+- **Quiz de apuntes:** utiliza notas guardadas para crear desafíos.
+- **Memoria:** práctica con pares y flashcards.
+- **Misión Focus:** temporizador ajustable con pausa, reinicio y progreso.
 
-### Material de estudio
+### Biblioteca
+- Biblioteca de audio y audiolibros.
+- Playlists creadas por el usuario.
+- Un único reproductor dentro de la Biblioteca.
+- Organización de material PDF por materia.
+- Lectura de documentos desde la misma experiencia de estudio.
+
+### LUMI Brain — lectura y comprensión
+- Carga local de **PDF, TXT, MD y CSV**.
+- Extracción de texto en el navegador.
+- Detección de conceptos frecuentes.
+- Selección de fragmentos relevantes para un resumen.
+- Preguntas básicas de comprensión.
+- Vista del texto completo para lectura.
+- No necesita enviar el documento a una IA externa.
+
+> La comprensión es un sistema local de apoyo al estudio. No reemplaza una revisión humana y no pretende interpretar de forma perfecta documentos escaneados o PDFs sin texto seleccionable.
+
+### Organización académica
 - Notas locales.
-- Materias con progreso.
-- Color personalizado por materia.
-- Calendario.
-- Eventos y exámenes.
-- Exportación/importación SQLite.
-
-### Alertas
-- Recordatorios dentro de LUMI.
-- Alertas suaves para exámenes cercanos.
-- Avisos del sistema mediante la API de Notifications cuando el usuario los permite.
-- Indicador visual cuando hay eventos próximos.
-- Temporizador Focus.
-
-> Los avisos programados dependen de que la web/PWA esté activa y de los permisos del navegador. Una web estática no puede garantizar un despertador del sistema cuando el navegador está completamente cerrado.
+- Materias y progreso.
+- Calendario mensual.
+- Exámenes y recordatorios.
+- Alertas visuales y, con permiso, Notifications API.
+- Persistencia local mediante SQLite/WebAssembly.
 
 ## 🌎 Idiomas
 
-La interfaz tiene traducciones para **todos los textos principales**, incluyendo navegación, títulos, botones, tarjetas, juegos, formularios, calendarios, mensajes y estados:
+La interfaz admite:
 
-- 🇪🇸 Español
-- 🇬🇧 English
-- 🇧🇷 Português
-- 🇷🇺 Русский
-- 🇯🇵 日本語
-- 🇨🇳 中文
+- Español
+- English
+- Português
+- Русский
+- 日本語
+- 中文
 
-La preferencia queda guardada localmente.
+La selección de idioma se conserva localmente. Los textos dinámicos de Juegos y LUMI Brain también se contemplan dentro del sistema de traducción.
 
-## 📄 PDF → Trivia
+## 🔒 Privacidad y arquitectura local-first
 
-El navegador lee el PDF directamente con PDF.js y extrae su texto. LUMI no manda el documento a una IA externa.
-
-Flujo:
+El objetivo de LUMI es que el material de estudio permanezca en el dispositivo siempre que sea posible.
 
 ```text
-PDF
- ↓
-Extracción local de texto
- ↓
-Segmentación de contenido
- ↓
-Preguntas de completar
- ↓
-Opciones múltiples
- ↓
-Juego
- ↓
-Puntaje
+Documento
+   ↓
+Navegador
+   ↓
+Extracción local
+   ↓
+Análisis / preguntas / resumen
+   ↓
+Experiencia de estudio
 ```
 
-La generación es **local y determinista**. No pretende reemplazar una IA generativa: su objetivo es ofrecer una herramienta gratuita, privada y funcional sin API key.
+No se necesita una cuenta para utilizar la experiencia principal y no se requieren API keys para PDF → Trivia o LUMI Brain.
 
-## 🗃️ Datos
+La información académica se guarda localmente mediante `sql.js` / SQLite en WebAssembly.
 
-LUMI usa `sql.js` para ejecutar SQLite/WebAssembly en el navegador.
-
-La información académica permanece local:
+## 🧩 Estructura
 
 ```text
-tasks
-subjects
-notes
-cards
-events
-sessions
+LUMI/
+├── index.html                 # experiencia principal
+├── style.css                  # base visual
+├── lumi-polish.css            # ajustes visuales
+├── lumi-library.css/js        # Biblioteca
+├── lumi-games.css/js          # Juegos
+├── lumi-games-pro.css         # capa visual de Juegos
+├── lumi-professional.css      # acabado general
+├── lumi-brain.css/js          # lectura y comprensión
+├── lumi-language.js            # traducciones dinámicas
+├── lumi-core.js               # lógica compartida
+├── lumi-runtime.js            # runtime
+├── app.js                     # aplicación principal
+├── sqlite-db.js               # persistencia local
+├── manifest.json              # PWA
+├── assets/                    # identidad visual
+├── backend/                   # backend opcional
+└── .github/workflows/         # validación y GitHub Pages
 ```
 
-No se requiere cuenta ni servidor.
+`index.html` es la experiencia principal. El repositorio conserva algunos módulos y prototipos históricos, pero la navegación actual está centralizada en la página principal.
 
-## 📱 Responsive
+## 🚀 Ejecutar localmente
 
-La interfaz está pensada para:
-
-- computadora;
-- notebook;
-- tablet;
-- celular.
-
-En pantallas pequeñas aparece una navegación inferior táctil y las tarjetas se reorganizan automáticamente.
-
-## 🎨 Diseño
-
-La identidad visual actual es un **Learning Garden japonés/minimalista**:
-
-- papel cálido;
-- rojo japonés suave;
-- serif editorial;
-- formas orgánicas;
-- mascota LUMI kawaii;
-- flores y hojas sutiles;
-- microinteracciones lentas;
-- transiciones suaves;
-- dark mode;
-- reducción de movimiento con `prefers-reduced-motion`.
-
-La animación está diseñada para acompañar el estudio y no competir con él.
-
-## 🔔 Alertas de exámenes
-
-Cuando agregás un evento cuyo nombre parece un examen —por ejemplo `Examen de Historia`— LUMI detecta automáticamente si está cerca y muestra una alerta visual.
-
-También podés activar notificaciones del sistema desde **Agenda → Activar avisos**.
-
-## 🚀 Uso
-
-No necesitás instalar SQLite, Node ni una API.
-
-La versión publicada en GitHub Pages funciona desde un navegador moderno.
-
-Para una copia local:
+No necesitás instalar SQLite ni una API para probar la experiencia frontend.
 
 ```bash
 git clone https://github.com/Sahilytech/LUMI.git
@@ -136,38 +109,67 @@ cd LUMI
 python -m http.server 8080
 ```
 
-Abrí:
+Después abrí:
 
 ```text
 http://localhost:8080/
 ```
 
-No uses `file://` si querés PWA, Service Worker o APIs web con restricciones de origen.
+Se recomienda usar un servidor local en lugar de `file://` para que funcionen correctamente las APIs del navegador, la PWA y los módulos ES utilizados por la lectura de PDF.
 
-## 🏗️ Estructura principal
+## 📱 Responsive
 
-```text
-LUMI/
-├── index.html
-├── style.css
-├── app.js
-├── sqlite-db.js
-├── lumi-core.js
-├── manifest.json
-├── sw.js
-├── assets/
-├── .github/workflows/
-├── LICENSE
-└── README.md
-```
+La interfaz está preparada para:
 
-El repositorio conserva prototipos anteriores, pero **`index.html` es la experiencia principal**.
+- escritorio;
+- notebook;
+- tablet;
+- celular.
 
-## 🔒 Privacidad
+En pantallas pequeñas la navegación pasa a una barra inferior y las áreas de Biblioteca, Juegos y Brain se reorganizan para conservar el contenido legible.
 
-La versión Learning Garden no necesita una API de IA externa para crear las trivias. Los PDFs se procesan en el navegador.
+## 🎨 Diseño
 
-No hay API keys en el frontend.
+LUMI utiliza una dirección visual **japonesa/minimalista tipo Learning Garden**:
+
+- papel cálido;
+- rosa y rojo apagados;
+- tipografía editorial;
+- formas suaves;
+- microinteracciones discretas;
+- dark mode;
+- `prefers-reduced-motion`;
+- foco en legibilidad y jerarquía.
+
+La interfaz busca sentirse como una herramienta de estudio real, no como un dashboard saturado.
+
+## 🔔 Alertas
+
+Los eventos de Agenda pueden marcarse como exámenes o recordatorios. LUMI puede mostrar alertas dentro de la web y solicitar permisos para notificaciones del navegador.
+
+> Las notificaciones web dependen de permisos, navegador y contexto de ejecución. Una web estática no puede garantizar una alarma del sistema cuando el navegador está completamente cerrado.
+
+## 🧪 Validación
+
+El repositorio incluye GitHub Actions para comprobar la sintaxis de los módulos frontend y del backend Node.
+
+Antes de publicar cambios, conviene probar:
+
+1. carga inicial;
+2. cambio de idioma;
+3. modo claro/oscuro;
+4. Biblioteca y reproducción;
+5. los cuatro juegos;
+6. carga de PDF/TXT/MD/CSV en LUMI Brain;
+7. creación de notas y eventos;
+8. responsive en una pantalla pequeña.
+
+## 📌 Limitaciones conocidas
+
+- Un PDF escaneado como imagen puede no contener texto extraíble.
+- La generación local de preguntas es determinista y no equivale a un modelo generativo.
+- Las notificaciones dependen de las capacidades y permisos del navegador.
+- La lectura de documentos grandes puede requerir más memoria del dispositivo.
 
 ## 👩‍💻 Autora
 
