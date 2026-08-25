@@ -12,20 +12,20 @@
 
 ---
 
-## 1. Problema educativo
+## Problema educativo
 
 En la secundaria, tener información no significa necesariamente saber organizarla. Un estudiante puede tener evaluaciones, trabajos prácticos, apuntes, PDFs, fotos y fechas repartidas en distintos lugares y aun así no saber **qué debería hacer primero**.
 
 AULA aborda esa dificultad desde la organización de la trayectoria escolar y la comprensión de materiales.
 
-### Problemas que busca reducir
+### Busca reducir
 
 - acumulación de tareas;
 - estudio de último momento;
 - dificultad para priorizar;
 - pérdida de materiales;
-- dificultad para retomar un contenido después de una ausencia;
-- convertir apuntes largos en acciones de estudio concretas.
+- dificultad para retomar contenidos después de una ausencia;
+- dificultad para transformar apuntes largos en acciones concretas de estudio.
 
 ### Pregunta central
 
@@ -33,7 +33,7 @@ AULA aborda esa dificultad desde la organización de la trayectoria escolar y la
 
 ---
 
-## 2. Solución
+## Solución
 
 AULA concentra en una sola aplicación:
 
@@ -44,11 +44,11 @@ AULA concentra en una sola aplicación:
 - práctica de comprensión;
 - planificación de sesiones de estudio.
 
-La herramienta está pensada para acompañar al estudiante, no para reemplazar a docentes, tutores u orientadores.
+La herramienta acompaña al estudiante; no reemplaza a docentes, tutores u orientadores.
 
 ---
 
-## 3. Funcionalidades
+## Funcionalidades
 
 ### Inicio
 
@@ -60,88 +60,63 @@ La herramienta está pensada para acompañar al estudiante, no para reemplazar a
 
 ### Materias
 
-Cada materia incluye:
+Cada materia incluye tema actual y porcentaje de avance editable.
 
-- tema actual;
-- porcentaje de avance editable;
-- referencia del progreso.
-
-El porcentaje es subjetivo y **no representa una nota**.
+El porcentaje es una referencia personal y **no representa una nota**.
 
 ### Tareas
 
 - crear tareas;
 - asignar materia;
 - marcar como completadas;
-- conservar datos en el navegador;
+- conservar la organización en el navegador;
 - visualizar pendientes.
 
 ### Lector y comprensión
 
-El lector trabaja con el texto disponible en el navegador.
-
-Incluye:
-
 - resumen inicial;
-- detección de conceptos frecuentes;
+- conceptos frecuentes;
 - preguntas de comprensión;
-- vista del documento;
-- copia del texto;
+- vista del texto;
+- copia del documento;
 - lectura en voz alta;
-- eliminación del documento.
+- eliminación del material.
 
 ### PDF
 
-AULA incorpora una extracción de texto para PDF mediante PDF.js cargado cuando se necesita.
+AULA intenta extraer texto de PDF mediante PDF.js cargado bajo demanda.
 
-La extracción está limitada a una cantidad razonable de páginas para mantener el MVP liviano.
-
-Los PDF escaneados o fotografías dentro de un PDF requieren OCR y forman parte de la siguiente etapa.
+La extracción está limitada a las primeras 40 páginas para mantener el MVP razonable. Un PDF escaneado puede necesitar OCR y no se presenta como correctamente interpretado si no se pudo extraer texto.
 
 ### Práctica
 
-La sección Práctica utiliza fragmentos del material cargado para generar preguntas abiertas de comprensión.
+La sección **Práctica** utiliza fragmentos del material cargado para formular preguntas abiertas.
 
-El sistema puede comparar de forma básica la respuesta escrita con palabras presentes en el fragmento.
-
-**No es una corrección automática académica.** Es una ayuda de autoevaluación y debe interpretarse como tal.
+La devolución actual compara de forma simple palabras de la respuesta con el fragmento original. **No es una corrección académica automática.** Es una herramienta de autoevaluación.
 
 ### Plan de estudio
 
-Distribuye sesiones cortas entre las materias:
-
-- prioridad;
-- repaso;
-- práctica;
-- duración aproximada.
+Distribuye sesiones cortas entre materias usando etiquetas de prioridad, repaso y práctica.
 
 ---
 
-## 4. Privacidad
+## Privacidad
 
-El objetivo del proyecto es favorecer el procesamiento local.
+El proyecto prioriza el procesamiento local.
 
-Las tareas, materias y preferencias de la demo se guardan en `localStorage` del navegador.
+Las tareas, materias, preferencias y configuración se guardan en `localStorage`. Los documentos cargados **no se persisten en localStorage**; permanecen en memoria mientras dura la sesión para evitar almacenar archivos grandes o sensibles en el almacenamiento del navegador.
 
-Los documentos cargados se mantienen en memoria/localStorage durante el uso de la aplicación según el estado de la demo; no existe actualmente un backend propio que almacene los archivos.
+No existe actualmente un backend propio que almacene los documentos.
 
-### Recomendaciones
+No se deben cargar datos personales de terceros, contraseñas, documentación sensible o archivos ajenos sin autorización.
 
-No cargar:
-
-- datos personales de terceros;
-- información médica;
-- contraseñas;
-- documentación sensible;
-- archivos de otras personas sin autorización.
-
-Si se agregan servicios externos de IA en futuras versiones, deberá existir una explicación clara de qué datos se envían y con qué finalidad.
+Si se incorporan servicios externos de IA, deberá explicarse qué información sale del dispositivo y con qué finalidad.
 
 ---
 
-## 5. Diseño
+## Diseño
 
-AULA utiliza un lenguaje visual sobrio:
+AULA utiliza un lenguaje visual sobrio y orientado a estudio:
 
 - jerarquía tipográfica;
 - poco ruido visual;
@@ -154,7 +129,7 @@ AULA utiliza un lenguaje visual sobrio:
 
 ---
 
-## 6. Tecnología
+## Tecnología
 
 - HTML5
 - CSS3
@@ -162,14 +137,12 @@ AULA utiliza un lenguaje visual sobrio:
 - LocalStorage API
 - Speech Synthesis API
 - File API
-- PDF.js bajo demanda para PDF
+- PDF.js bajo demanda
 - PWA manifest
 
 No requiere backend para el MVP.
 
----
-
-## 7. Estructura
+### Estructura
 
 ```text
 AULA/
@@ -185,14 +158,14 @@ AULA/
 
 ---
 
-## 8. Roadmap
+## Roadmap
 
 ### Organización
 
 - [x] Inicio
 - [x] Materias
 - [x] Tareas
-- [x] Persistencia local
+- [x] Persistencia local de datos no documentales
 - [x] Plan de estudio
 - [ ] Calendario escolar configurable por jurisdicción
 - [ ] Recuperatorios
@@ -233,7 +206,7 @@ AULA/
 - [x] Dark mode
 - [x] Favicon
 - [x] Manifest PWA
-- [ ] IndexedDB
+- [ ] IndexedDB para datos locales más grandes
 - [ ] Tests automatizados
 - [ ] Accesibilidad WCAG ampliada
 - [ ] Sincronización entre dispositivos
@@ -242,31 +215,26 @@ AULA/
 
 ---
 
-## 9. Principios educativos
+## Principios educativos
 
 ### Acompañar, no reemplazar
-
 AULA organiza y ayuda a practicar. No reemplaza el criterio docente.
 
 ### El documento original manda
-
 Los análisis automáticos deben contrastarse con el material original.
 
 ### Comprender antes que memorizar
-
 La práctica prioriza explicar ideas con palabras propias.
 
 ### Menos decisiones innecesarias
-
 El producto intenta responder qué conviene hacer a continuación.
 
 ### Privacidad primero
-
 El procesamiento local se prioriza cuando es técnicamente posible.
 
 ---
 
-## 10. Licencia
+## Licencia
 
 AULA se distribuye bajo **MIT License**.
 
@@ -276,7 +244,7 @@ Ver [`LICENSE`](LICENSE).
 
 ---
 
-## 11. Autora
+## Autora
 
 **Sarah Lee Olivera**  
 Creadora y desarrolladora de AULA  
