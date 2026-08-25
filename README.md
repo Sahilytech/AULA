@@ -1,144 +1,175 @@
 # AULA — Trayectoria escolar
 
-**Una herramienta educativa pensada para estudiantes de secundaria argentina.**
+**Herramienta educativa para estudiantes de secundaria argentina.**
 
 > Convertir tareas, materias y materiales dispersos en próximos pasos claros.
 
 **Creadora:** Sarah Lee Olivera  
-**Estudio / marca:** NubiWorks  
+**Marca / estudio:** NubiWorks  
 **Proyecto:** AULA  
 **Año:** 2026  
 **Estado:** MVP funcional en evolución
 
 ---
 
-## El problema
+## 1. Problema educativo
 
-En la secundaria, el problema no siempre es la falta de información. Muchas veces el estudiante tiene demasiada información repartida entre carpetas, apuntes, PDFs, mensajes, fechas de evaluación y trabajos prácticos, pero no una forma simple de decidir **qué hacer primero**.
+En la secundaria, tener información no significa necesariamente saber organizarla. Un estudiante puede tener evaluaciones, trabajos prácticos, apuntes, PDFs, fotos y fechas repartidas en distintos lugares y aun así no saber **qué debería hacer primero**.
 
-Esto puede generar:
+AULA aborda esa dificultad desde la organización de la trayectoria escolar y la comprensión de materiales.
+
+### Problemas que busca reducir
 
 - acumulación de tareas;
+- estudio de último momento;
 - dificultad para priorizar;
 - pérdida de materiales;
-- estudio de último momento;
-- problemas para recuperar contenidos después de una ausencia;
-- dificultad para transformar un apunte en una estrategia de estudio.
+- dificultad para retomar un contenido después de una ausencia;
+- convertir apuntes largos en acciones de estudio concretas.
 
-AULA nace para abordar esa parte concreta de la trayectoria escolar.
-
-## La solución
-
-AULA funciona como un centro personal de organización académica. Su pregunta principal es:
+### Pregunta central
 
 > **¿Qué tengo que hacer hoy para avanzar sin quedarme atrás?**
 
-La aplicación reúne cinco áreas:
+---
 
-1. **Inicio** — panorama rápido del estado académico.
-2. **Materias** — materias, temas y progreso personal.
-3. **Tareas** — pendientes, fechas y estados.
-4. **Lector y comprensión** — convertir materiales en una guía de estudio.
-5. **Plan** — distribuir sesiones de estudio cortas y realistas.
+## 2. Solución
+
+AULA concentra en una sola aplicación:
+
+- panorama académico;
+- materias y progreso personal;
+- tareas y evaluaciones;
+- lectura y comprensión de materiales;
+- práctica de comprensión;
+- planificación de sesiones de estudio.
+
+La herramienta está pensada para acompañar al estudiante, no para reemplazar a docentes, tutores u orientadores.
 
 ---
 
-## Funcionalidades actuales
+## 3. Funcionalidades
 
 ### Inicio
 
 - progreso general;
-- cantidad de actividades pendientes;
-- panorama por materia;
+- cantidad de pendientes;
+- estado de cada materia;
 - tareas próximas;
-- accesos rápidos al lector, tareas y planificación.
+- accesos rápidos.
 
 ### Materias
 
-Cada materia puede mostrar:
+Cada materia incluye:
 
 - tema actual;
-- porcentaje de avance personal;
-- referencia del estado de estudio.
+- porcentaje de avance editable;
+- referencia del progreso.
 
-El porcentaje **no es una calificación** y no pretende reemplazar una evaluación docente.
+El porcentaje es subjetivo y **no representa una nota**.
 
 ### Tareas
 
-Permite:
-
 - crear tareas;
-- asociarlas a una materia;
-- marcarlas como completadas;
-- conservarlas en el navegador;
-- ver rápidamente las pendientes.
-
-Los datos básicos se guardan con `localStorage` para que la demo no dependa de un servidor.
+- asignar materia;
+- marcar como completadas;
+- conservar datos en el navegador;
+- visualizar pendientes.
 
 ### Lector y comprensión
 
-El lector permite cargar materiales y trabajar con su texto cuando el navegador puede extraerlo.
+El lector trabaja con el texto disponible en el navegador.
 
-Actualmente incluye:
+Incluye:
 
-- resumen inicial basado en fragmentos del documento;
-- detección de palabras/conceptos frecuentes;
-- preguntas de comprensión basadas en fragmentos;
-- vista del texto completo;
+- resumen inicial;
+- detección de conceptos frecuentes;
+- preguntas de comprensión;
+- vista del documento;
 - copia del texto;
-- lectura en voz alta mediante `SpeechSynthesis` del navegador;
-- eliminación del material cargado.
+- lectura en voz alta;
+- eliminación del documento.
 
-**Importante:** el MVP no presenta el análisis automático como una verdad académica. El contenido original siempre debe ser la referencia.
+### PDF
 
-Los PDF escaneados no se consideran correctamente interpretados todavía. Para ellos hace falta una capa OCR/parser específica.
+AULA incorpora una extracción de texto para PDF mediante PDF.js cargado cuando se necesita.
+
+La extracción está limitada a una cantidad razonable de páginas para mantener el MVP liviano.
+
+Los PDF escaneados o fotografías dentro de un PDF requieren OCR y forman parte de la siguiente etapa.
+
+### Práctica
+
+La sección Práctica utiliza fragmentos del material cargado para generar preguntas abiertas de comprensión.
+
+El sistema puede comparar de forma básica la respuesta escrita con palabras presentes en el fragmento.
+
+**No es una corrección automática académica.** Es una ayuda de autoevaluación y debe interpretarse como tal.
 
 ### Plan de estudio
 
-AULA genera una estructura simple de sesiones para varios días:
+Distribuye sesiones cortas entre las materias:
 
 - prioridad;
 - repaso;
 - práctica;
 - duración aproximada.
 
-La intención es reducir la carga de decidir por dónde empezar, no imponer una rutina rígida.
+---
+
+## 4. Privacidad
+
+El objetivo del proyecto es favorecer el procesamiento local.
+
+Las tareas, materias y preferencias de la demo se guardan en `localStorage` del navegador.
+
+Los documentos cargados se mantienen en memoria/localStorage durante el uso de la aplicación según el estado de la demo; no existe actualmente un backend propio que almacene los archivos.
+
+### Recomendaciones
+
+No cargar:
+
+- datos personales de terceros;
+- información médica;
+- contraseñas;
+- documentación sensible;
+- archivos de otras personas sin autorización.
+
+Si se agregan servicios externos de IA en futuras versiones, deberá existir una explicación clara de qué datos se envían y con qué finalidad.
 
 ---
 
-## Diseño
+## 5. Diseño
 
-La interfaz está pensada como una herramienta educativa y no como una red social o un juego.
+AULA utiliza un lenguaje visual sobrio:
 
-Principios visuales:
-
-- jerarquía clara;
+- jerarquía tipográfica;
 - poco ruido visual;
-- acciones visibles;
 - responsive;
 - modo claro y oscuro;
-- controles accesibles por teclado;
-- tarjetas usadas solo cuando ayudan a separar información;
-- tipografía legible;
-- estados visuales consistentes.
+- botones con estados claros;
+- navegación simple;
+- tarjetas solo cuando aportan estructura;
+- lectura cómoda en PC y celular.
 
 ---
 
-## Tecnología
-
-AULA está construido inicialmente como una aplicación web estática:
+## 6. Tecnología
 
 - HTML5
 - CSS3
-- JavaScript moderno
-- Web APIs
-- LocalStorage
+- JavaScript
+- LocalStorage API
 - Speech Synthesis API
+- File API
+- PDF.js bajo demanda para PDF
 - PWA manifest
 
-No necesita backend para la demo actual.
+No requiere backend para el MVP.
 
-### Arquitectura
+---
+
+## 7. Estructura
 
 ```text
 AULA/
@@ -152,110 +183,100 @@ AULA/
 └── .gitkeep
 ```
 
-La arquitectura está deliberadamente mantenida simple para que pueda ser comprendida, presentada y extendida dentro de un proyecto escolar.
-
 ---
 
-## Privacidad
-
-La intención del proyecto es favorecer el procesamiento local de materiales escolares.
-
-AULA no necesita enviar los documentos a un servidor para las funciones actuales de análisis básico y lectura.
-
-Aun así:
-
-- no se deben cargar datos personales de otras personas sin autorización;
-- no se deben utilizar documentos sensibles en servicios externos sin consentimiento;
-- las futuras funciones con IA deberán explicar claramente qué datos salen del dispositivo;
-- el proyecto no reemplaza a docentes, tutores, orientadores ni instituciones educativas.
-
----
-
-## Roadmap
+## 8. Roadmap
 
 ### Organización
 
 - [x] Inicio
 - [x] Materias
 - [x] Tareas
-- [x] Persistencia local básica
+- [x] Persistencia local
 - [x] Plan de estudio
 - [ ] Calendario escolar configurable por jurisdicción
 - [ ] Recuperatorios
 - [ ] Mesas de examen
-- [ ] Asistencia y seguimiento de inasistencias
+- [ ] Seguimiento de asistencia
 
 ### Comprensión
 
-- [x] Lectura de TXT/MD/CSV
+- [x] TXT
+- [x] MD
+- [x] CSV
+- [x] Extracción PDF básica
 - [x] Resumen inicial
 - [x] Conceptos frecuentes
 - [x] Preguntas de comprensión
+- [x] Vista del texto
 - [x] Lectura en voz alta
-- [ ] Parser PDF robusto
-- [ ] OCR para fotografías de apuntes
+- [x] Práctica abierta
+- [ ] OCR para fotografías
+- [ ] OCR para PDF escaneado
 - [ ] Extracción de tablas
-- [ ] Reconocimiento de estructura de apuntes
+- [ ] Reconocimiento de títulos y secciones
 
 ### Estudio
 
+- [x] Plan de estudio
+- [x] Práctica basada en documento
 - [ ] Simulacros de evaluación
 - [ ] Tarjetas de estudio
 - [ ] Repaso espaciado
-- [ ] Registro de errores frecuentes
-- [ ] Generación avanzada de preguntas con IA opcional
+- [ ] Registro de errores
+- [ ] IA opcional para preguntas avanzadas
 - [ ] Modo examen
 
 ### Plataforma
 
 - [x] Responsive
 - [x] Dark mode
-- [x] PWA manifest
 - [x] Favicon
+- [x] Manifest PWA
 - [ ] IndexedDB
 - [ ] Tests automatizados
 - [ ] Accesibilidad WCAG ampliada
-- [ ] Backend opcional
 - [ ] Sincronización entre dispositivos
+- [ ] Backend opcional
 - [ ] Modo docente
 
 ---
 
-## Principios del proyecto
+## 9. Principios educativos
 
-### 1. La herramienta acompaña, no reemplaza
+### Acompañar, no reemplazar
 
-AULA ayuda a organizar y estudiar. No pretende reemplazar al docente ni emitir diagnósticos académicos.
+AULA organiza y ayuda a practicar. No reemplaza el criterio docente.
 
-### 2. El material original importa
+### El documento original manda
 
-Los resúmenes y preguntas automáticas deben poder contrastarse con el documento original.
+Los análisis automáticos deben contrastarse con el material original.
 
-### 3. Menos decisiones innecesarias
+### Comprender antes que memorizar
 
-El objetivo principal es transformar una lista confusa de pendientes en próximos pasos concretos.
+La práctica prioriza explicar ideas con palabras propias.
 
-### 4. Privacidad primero
+### Menos decisiones innecesarias
 
-El procesamiento local se prioriza siempre que sea técnicamente posible.
+El producto intenta responder qué conviene hacer a continuación.
 
-### 5. Tecnología comprensible
+### Privacidad primero
 
-El proyecto busca ser suficientemente simple para que estudiantes puedan entender cómo está construido.
+El procesamiento local se prioriza cuando es técnicamente posible.
 
 ---
 
-## Licencia
+## 10. Licencia
 
-AULA se distribuye bajo la **MIT License**.
+AULA se distribuye bajo **MIT License**.
 
 Copyright (c) 2026 **Sarah Lee Olivera / NubiWorks**.
 
-Consultar [`LICENSE`](LICENSE) para el texto completo.
+Ver [`LICENSE`](LICENSE).
 
 ---
 
-## Autora
+## 11. Autora
 
 **Sarah Lee Olivera**  
 Creadora y desarrolladora de AULA  
